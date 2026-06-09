@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-app = FastAPI(description="The application is for Front Desk Management System")
+app = FastAPI(description="This application is for Front Desk Management System")
 
 from app.database import Base, engine
 from app.models.room import Room
@@ -21,6 +21,9 @@ async def shutdown_event():
 @app.get("/", tags = ["Home"])
 async def home():
     return {"message":"Front Desk Management System"}
+
+from app.routers.analytics import router as analytics_router
+app.include_router(analytics_router)
 
 from app.routers.auth import router as auth_router
 app.include_router(auth_router)

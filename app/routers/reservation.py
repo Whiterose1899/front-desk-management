@@ -45,6 +45,8 @@ async def creating_reservation(reservation: create_reservation, db : Session_Dep
         if overlap: #type: ignore
             raise HTTPException(status_code=409, detail="Cannot make the reservation ~ Reservation Clash")
     
+    room.availability_status=False #type: ignore
+    
     db.add(new_reservation)
     db.commit()
     db.refresh(new_reservation)
@@ -172,6 +174,8 @@ async def delete_reservation(reservation_id:int, db:Session_Dep):
         raise HTTPException(status_code=404, detail="Reservation Does Not Exist.")
     check_in = cast(date,current_reservation.check_in)
     guest = db.query(Guests).filter(Guests.id==current_reservation.guest_id).first()
+    room = db.query(Room).filter(Reservation.room_id==Room.id).first()
+    room.availability_status=True #type: ignore
     db.delete(current_reservation)
     db.commit()
     await cancel_reservation(guest, check_in)
