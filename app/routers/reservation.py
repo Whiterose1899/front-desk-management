@@ -51,7 +51,7 @@ async def creating_reservation(reservation: create_reservation, db : Session_Dep
     db.commit()
     db.refresh(new_reservation)
 
-    await send_reservation_email(new_reservation, room, guest)
+    await send_reservation_email(new_reservation, room, guest) # type: ignore
 
     return{
         "id":new_reservation.id,

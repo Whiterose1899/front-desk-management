@@ -8,8 +8,10 @@ from datetime import date, timedelta
 from app.models.reservation import Reservation
 from app.models.guest import Guests
 from app.models.room import Room
+from utilis.permissions import admin_access
+from utilis.dependencies import get_current_user
 
-router = APIRouter(prefix="/analytics")
+router = APIRouter(prefix="/analytics", dependencies= [Depends(get_current_user), Depends(admin_access)])
 
 Session_Dep = Annotated[Session, Depends(get_db)]
 
@@ -53,7 +55,7 @@ async def most_booked_room(db: Session_Dep):
     room = db.query(Room).filter(Room.id==reserve[0]).first()
     return {
         "Room_Number": room.room_number, #type: ignore
-        "Number_of_Reservations": reserve[1]
+        "Number_of_Reservation": reserve[1]
     }
 
 @router.get("/Revenue", tags = ["Revenue Generated"])

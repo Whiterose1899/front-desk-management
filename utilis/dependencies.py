@@ -34,3 +34,4 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
             status_code=401,
             detail="Invalid authentication credentials."
         )
+    
