@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:16
+    container_name: fdms_db
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: frontdesk_db
+
+    ports:
+      - "5432:5432"
+  api:
+    build: .
+    container_name: fdms_api
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - db
+    
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/frontdesk_db

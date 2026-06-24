@@ -76,7 +76,7 @@ async def guest_delete(guest_id: int, db: Session = Depends(get_db), user = Depe
     malicious_guest = db.query(Guests).filter(Guests.id == guest_id).first()
     
     if not malicious_guest:
-        raise HTTPException(status_code=404, detail="Guest not found(Delete Command).")
+        raise HTTPException(status_code=404, detail="Guest not found --> Check the ID")
     
     db.delete(malicious_guest)
     db.commit()
