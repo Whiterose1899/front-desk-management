@@ -18,6 +18,11 @@ from app.config import (
     MAIL_USE_CREDENTIALS
 )
 
+print("MAIL_SERVER =", MAIL_SERVER)
+print("MAIL_PORT =", MAIL_PORT)
+print("MAIL_STARTTLS =", MAIL_STARTTLS)
+print("MAIL_SSL_TLS =", MAIL_SSL_TLS)
+
 config = ConnectionConfig(
     MAIL_USERNAME = MAIL_USERNAME,
     MAIL_PASSWORD = SecretStr(MAIL_PASSWORD),
