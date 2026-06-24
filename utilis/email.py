@@ -55,8 +55,11 @@ async def send_reservation_email(reservation: Reservation, room: Room, guest: Gu
     fm = FastMail(config)
     try:
         await fm.send_message(message=message)
-    except:
-        raise HTTPException(status_code=403, detail="Email has not been sent.")
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Email sending failed: {str(e)}"
+        )
     
 async def cancel_reservation(guest: Guests, check_in: date):
     body = f"""
