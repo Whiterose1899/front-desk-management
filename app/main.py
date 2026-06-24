@@ -36,3 +36,13 @@ app.include_router(guest_router)
 
 from app.routers.reservation import router as reservation_router
 app.include_router(reservation_router)
+
+import socket
+
+@app.get("/smtp-test")
+async def smtp_test():
+    try:
+        socket.create_connection(("smtp.gmail.com",587),timeout=10)
+        return {"status":"connected"}
+    except Exception as e:
+        return {"error":str(e)}
