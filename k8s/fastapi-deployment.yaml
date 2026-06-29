@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: fdms-deployment
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: fdms
+
+  template:
+
+    metadata:
+      labels:
+        app: fdms
+
+    spec:
+      containers:
+
+        - name: fdms
+
+          image: front-desk-management-api:latest
+
+          ports:
+            - containerPort: 8000
+
+          env:
+
+            - name: DATABASE_URL
+              value: postgresql://postgres:password@postgres:5432/fdms
+
+            - name: MAIL_USERNAME
+              value: bangikarthikesh26@gmail.com
+
+            - name: MAIL_PASSWORD
+              value: ""
+
+            - name: MAIL_FROM
+              value: bangikarthikesh26@gmail.com
+
+            - name: MAIL_SERVER
+              value: smtp.gmail.com
+
+            - name: MAIL_PORT
+              value: "587"
+
+            - name: MAIL_STARTTLS
+              value: "True"
+
+            - name: MAIL_SSL_TLS
+              value: "False"
+
+            - name: MAIL_USE_CREDENTIALS
+              value: "True"
