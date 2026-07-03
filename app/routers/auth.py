@@ -32,11 +32,11 @@ async def signup(users: Usersignup, db: SessionDep):
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
-    except Exception:
+    except Exception as e:
         db.rollback()
         raise HTTPException(
             status_code=500,
-            detail="An error occurred while creating the user."
+            detail=f"An error occurred while creating the user: {str(e)}"
         )
     return {
         "id": new_user.id,

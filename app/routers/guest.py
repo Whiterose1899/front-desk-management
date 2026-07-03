@@ -42,7 +42,6 @@ async def guest_post(
 @router.get("/guest", response_model=list[guest_response])
 async def guest_all_fetch(
     db: Session = Depends(get_db),
-    user = Depends(admin_access)
 ):
     my_guest = db.query(Guests).all()
     if my_guest is None:
@@ -50,7 +49,7 @@ async def guest_all_fetch(
     return my_guest
 
 @router.get("/guest/{guest_id}", response_model=guest_response)
-async def guest_fetch(guest_id: int, db: Session = Depends(get_db), user = Depends(admin_access)):
+async def guest_fetch(guest_id: int, db: Session = Depends(get_db)):
     the_guest = db.query(Guests).filter(Guests.id == guest_id).first()
     if not the_guest:
         raise HTTPException(status_code=404, detail="Guest Not Found.")

@@ -43,7 +43,7 @@ async def room_post(
     "/room/allrooms",
     response_model=list[Room_response],
 )
-async def get_all_rooms(db: Session = Depends(get_db), user = Depends(manager_or_admin_access)):
+async def get_all_rooms(db: Session = Depends(get_db)):
     room = db.query(Room).all()
     if room is None:
         raise HTTPException(status_code=404, detail="Room not found.")
@@ -55,8 +55,7 @@ async def get_all_rooms(db: Session = Depends(get_db), user = Depends(manager_or
 )
 async def get_the_rooms(
     room_num: str, 
-    db: Session = Depends(get_db),
-    user = Depends(manager_or_admin_access)
+    db: Session = Depends(get_db)
 ):
     room = db.query(Room).filter(Room.room_number==room_num).first()
     if room is None:
