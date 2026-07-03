@@ -65,7 +65,6 @@ async def creating_reservation(reservation: create_reservation, db : Session_Dep
 @router.get("/all",response_model=list[reservation_response])
 async def fetch_all_reservation(
     db: Session_Dep,
-    user = Depends(manager_or_admin_access)
 ):
     reservation = db.query(Reservation).order_by(Reservation.id.desc()).all()
 
@@ -89,7 +88,6 @@ async def fetch_all_reservation(
 async def fetch_history_of_room(
     room_number: str, 
     db: Session_Dep,
-    user= Depends(manager_or_admin_access)
 ):
     room = db.query(Room).filter(Room.room_number==room_number).first()
     if not room:
@@ -114,7 +112,7 @@ async def fetch_history_of_room(
     return result
 
 @router.get("/guest/info", response_model=list[reservation_history_room])
-async def fetch_history_of_guest(first_name: str, last_name: str, db: Session_Dep, user = Depends(manager_or_admin_access)):
+async def fetch_history_of_guest(first_name: str, last_name: str, db: Session_Dep):
     guest = db.query(Guests).filter((Guests.first_name==first_name) & (Guests.last_name==last_name)).first()
     if not guest:
         raise HTTPException(status_code=404, detail="Guest Does Not Exist.")
