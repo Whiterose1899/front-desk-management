@@ -8,7 +8,7 @@ from app.models.room import Room
 from app.models.guest import Guests
 from utilis.dependencies import get_current_user
 from utilis.permissions import manager_or_admin_access, admin_access
-from utilis.email import send_reservation_email, cancel_reservation
+# from utilis.email import send_reservation_email, cancel_reservation
 
 router = APIRouter(
     prefix="/reservation", 
@@ -51,7 +51,7 @@ async def creating_reservation(reservation: create_reservation, db : Session_Dep
     db.commit()
     db.refresh(new_reservation)
 
-    await send_reservation_email(new_reservation, room, guest) # type: ignore
+    # await send_reservation_email(new_reservation, room, guest) # type: ignore
 
     return{
         "id":new_reservation.id,
@@ -176,7 +176,7 @@ async def delete_reservation(reservation_id:int, db:Session_Dep):
     room.availability_status=True #type: ignore
     db.delete(current_reservation)
     db.commit()
-    await cancel_reservation(guest, check_in)
+    # await cancel_reservation(guest, check_in)
     return {"message":"Delete Successfull"}
 
 """ 
