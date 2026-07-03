@@ -1,9 +1,5 @@
 import axios from "axios";
 
-// Backend URL
-// Development: VITE_API_URL=http://localhost:8000
-// Production : VITE_API_URL=https://your-render-app.onrender.com
-
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
