@@ -6,7 +6,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://front-desk-management.onrender.com",
+        "https://fdms-frontend.onrender.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
