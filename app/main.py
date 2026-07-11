@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
 app = FastAPI(description="This application is for Front Desk Management System")
+Instrumentator().instrument(app).expose(app)
 
 app.add_middleware(
     CORSMiddleware,
